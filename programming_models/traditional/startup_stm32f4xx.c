@@ -181,7 +181,7 @@ void WEAK FPU_IRQHandler                    (void);  /* FPU                     
 *
 ******************************************************************************/
 
-__attribute__ ((section(".isr_vector")))
+__attribute__ ((section(".isr_vector"), used))
 void (* const g_pfnVectors[])(void) =
 {       
     (intfunc)((unsigned long)&_estack), /* The initial stack pointer */

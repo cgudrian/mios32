@@ -462,6 +462,7 @@ void *__dso_handle = NULL;
 /////////////////////////////////////////////////////////////////////////////
 // Customized HardFault Handler which prints out debugging informations
 /////////////////////////////////////////////////////////////////////////////
+__attribute__((used))
 void HardFault_Handler_c(unsigned int * hardfault_args)
 {
   // from the book: "The definiteve guide to the ARM Cortex-M3"
