@@ -88,7 +88,7 @@ extern s32 MIOS32_ENC28J60_WriteReg(u8 address, u8 data);
 extern s32 MIOS32_ENC28J60_BFCReg(u8 address, u8 data);
 extern s32 MIOS32_ENC28J60_BFSReg(u8 address, u8 data);
 extern s32 MIOS32_ENC28J60_WritePHYReg(u8 reg, u16 data);
-extern s32 MIOS32_ENC28J60_BankSel(u16 register);
+extern s32 MIOS32_ENC28J60_BankSel(u16 reg);
 
 extern s32 MIOS32_ENC28J60_SendSystemReset(void);
 
