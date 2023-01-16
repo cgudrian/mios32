@@ -276,31 +276,31 @@ static uint32_t USB_OTG_USBH_handle_nptxfempty_ISR (USB_OTG_CORE_HANDLE *pdev)
   
   hnptxsts.d32 = USB_OTG_READ_REG32(&pdev->regs.GREGS->HNPTXSTS);
   
-  len_words = (pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_len + 3) / 4;
+  len_words = (pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_len + 3) / 4;
   
   while ((hnptxsts.b.nptxfspcavail > len_words)&&
-         (pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_len != 0))
+         (pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_len != 0))
   {
     
     len = hnptxsts.b.nptxfspcavail * 4;
     
-    if (len > pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_len)
+    if (len > pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_len)
     {
       /* Last packet */
-      len = pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_len;
+      len = pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_len;
       
       intmsk.d32 = 0;
       intmsk.b.nptxfempty = 1;
       USB_OTG_MODIFY_REG32( &pdev->regs.GREGS->GINTMSK, intmsk.d32, 0);       
     }
     
-    len_words = (pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_len + 3) / 4;
+    len_words = (pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_len + 3) / 4;
     
-    USB_OTG_WritePacket (pdev , pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_buff, hnptxsts.b.nptxqtop.chnum, len);
+    USB_OTG_WritePacket (pdev , pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_buff, hnptxsts.b.nptxqtop_chnum, len);
     
-    pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_buff  += len;
-    pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_len   -= len;
-    pdev->host.hc[hnptxsts.b.nptxqtop.chnum].xfer_count  += len; 
+    pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_buff  += len;
+    pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_len   -= len;
+    pdev->host.hc[hnptxsts.b.nptxqtop_chnum].xfer_count  += len;
     
     hnptxsts.d32 = USB_OTG_READ_REG32(&pdev->regs.GREGS->HNPTXSTS);
   }  
@@ -324,30 +324,30 @@ static uint32_t USB_OTG_USBH_handle_ptxfempty_ISR (USB_OTG_CORE_HANDLE *pdev)
   
   hptxsts.d32 = USB_OTG_READ_REG32(&pdev->regs.HREGS->HPTXSTS);
   
-  len_words = (pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_len + 3) / 4;
+  len_words = (pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_len + 3) / 4;
   
   while ((hptxsts.b.ptxfspcavail > len_words)&&
-         (pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_len != 0))    
+         (pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_len != 0))
   {
     
     len = hptxsts.b.ptxfspcavail * 4;
     
-    if (len > pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_len)
+    if (len > pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_len)
     {
-      len = pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_len;
+      len = pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_len;
       /* Last packet */
       intmsk.d32 = 0;
       intmsk.b.ptxfempty = 1;
       USB_OTG_MODIFY_REG32( &pdev->regs.GREGS->GINTMSK, intmsk.d32, 0); 
     }
     
-    len_words = (pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_len + 3) / 4;
+    len_words = (pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_len + 3) / 4;
     
-    USB_OTG_WritePacket (pdev , pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_buff, hptxsts.b.ptxqtop.chnum, len);
+    USB_OTG_WritePacket (pdev , pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_buff, hptxsts.b.ptxqtop_chnum, len);
     
-    pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_buff  += len;
-    pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_len   -= len;
-    pdev->host.hc[hptxsts.b.ptxqtop.chnum].xfer_count  += len; 
+    pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_buff  += len;
+    pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_len   -= len;
+    pdev->host.hc[hptxsts.b.ptxqtop_chnum].xfer_count  += len;
     
     hptxsts.d32 = USB_OTG_READ_REG32(&pdev->regs.HREGS->HPTXSTS);
   }  
